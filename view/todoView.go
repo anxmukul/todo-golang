@@ -25,7 +25,6 @@ type Todo struct {
 
 func (t Todo) ShowTodo() {
 	fmt.Println("Todo:")
-	// fmt.Println(t)
 	res, err := json.MarshalIndent(t, "", "")
 	if err != nil {
 		fmt.Println("Error while converting into JSON")

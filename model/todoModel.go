@@ -17,9 +17,7 @@ type Todo struct {
 // 	Content string
 // }
 
-func (t Todo) InsertTodo() {
-	fmt.Println("Inside model createTodo()")
-	fmt.Printf("{Title: %s\tContent: %s}\n", t.Title, t.Content)
+func (t Todo) InsertTodo() int {
 	var d db.Db
 	db := d.ConnectToDb()
 	insertQuery := `insert into mytodo(title, content) values($1, $2) returning id;`
@@ -28,7 +26,7 @@ func (t Todo) InsertTodo() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("Createdted to with id:", id)
+	return id
 }
 
 func (t Todo) DeleteTodo() int {
@@ -47,7 +45,6 @@ func (t Todo) DeleteTodo() int {
 }
 
 func (t Todo) GetTodo() Todo {
-	fmt.Println("Inside model getTodo() function")
 	var d db.Db
 	db := d.ConnectToDb()
 	selectQuery := `select * from mytodo where title = $1;`
@@ -56,14 +53,10 @@ func (t Todo) GetTodo() Todo {
 	if err != nil {
 		fmt.Println(err)
 	}
-	// fmt.Println(res)
 	return res
-	// This will update todo
-
 }
 
 func (t Todo) GetAllTodo() []Todo {
-	// this will get all todo
 	fmt.Println("Inside model GetAllTodo()")
 	selectQuery := `select * from mytodo;`
 	var d db.Db
