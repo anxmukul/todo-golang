@@ -34,30 +34,30 @@ func (d Db) ConnectToDb() *sql.DB {
 	return db
 }
 
-func handleRowsReturedByQuery(rows *sql.Rows) int {
-	var noOfRows = 0
-	var TodoId int
-	var TodoTitle string
-	var TodoContent string
-	for rows.Next() {
-		err := rows.Scan(&TodoId, &TodoTitle, &TodoContent)
-		if err != nil {
-			fmt.Println(err)
-		}
-		noOfRows++
-	}
-	return noOfRows
-}
-func main() {
-	var db Db
-	r := db.ConnectToDb()
-	selectQuery := `select * from mytodo;`
-	res, err := r.Query(selectQuery)
-	defer res.Close()
+// func handleRowsReturedByQuery(rows *sql.Rows) int {
+// 	var noOfRows = 0
+// 	var TodoId int
+// 	var TodoTitle string
+// 	var TodoContent string
+// 	for rows.Next() {
+// 		err := rows.Scan(&TodoId, &TodoTitle, &TodoContent)
+// 		if err != nil {
+// 			fmt.Println(err)
+// 		}
+// 		noOfRows++
+// 	}
+// 	return noOfRows
+// }
+// func main() {
+// 	var db Db
+// 	r := db.ConnectToDb()
+// 	selectQuery := `select * from mytodo;`
+// 	res, err := r.Query(selectQuery)
+// 	defer res.Close()
 
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(handleRowsReturedByQuery(res))
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	fmt.Println(handleRowsReturedByQuery(res))
 
-}
+// }
