@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 
@@ -16,17 +15,6 @@ type todoInterface interface {
 	deleteTodo()
 }
 
-func getUserInput(todoField string) string {
-	fmt.Printf("Enter %s of Todo\n", todoField)
-	titleScanner := bufio.NewScanner(os.Stdin)
-	titleScanner.Scan()
-	err := titleScanner.Err()
-	if err != nil {
-		panic(err)
-	}
-	return titleScanner.Text()
-}
-
 type todo struct {
 	Id      int
 	Title   string
@@ -34,24 +22,36 @@ type todo struct {
 }
 
 func (t todo) createTodo() {
-	t.Id = 0
-	t.Title = getUserInput("title")
-	t.Content = getUserInput("content")
 	r := m.Todo{Id: t.Id, Title: t.Title, Content: t.Content}
 	r.InsertTodo()
 }
+
+func (t todo) getTodo() todo {
+	// t.Title = getUserInput("title");
+	r := m.Todo{Title: t.Title}
+	returedTodo := r.GetTodo()
+	res := todo{Id: returedTodo.Id, Title: returedTodo.Title, Content: returedTodo.Content}
+	return res
+}
+
 
 func handleRequest(choice int) {
 	switch choice {
 	case 1:
 		fmt.Printf("Your choose %d to create a todo\n", choice)
-		t := todo{}
+		myTodo := v.Todo{}
+		res := myTodo.GetTodoFieldFromUser()
+		t := todo{Id: res.Id, Title: res.Title, Content: res.Content}
 		t.createTodo()
 		handleRequest(v.DisplayInterface())
 	case 2:
-		fmt.Printf("Your choose %d to show all todo\n", choice)
-		r := m.Todo{}
-		r.GetAllTodo()
+		fmt.Printf("Your choose %d to show todo\n", choice)
+		myTodo := v.Todo{}
+		input := myTodo.GetTodoTitleFromUser()
+		t := todo{Title: input.Title}
+		returedTodo := t.getTodo()
+		res := v.Todo{Id: returedTodo.Id, Title: returedTodo.Title, Content: returedTodo.Content}
+		res.ShowTodo()
 		handleRequest(v.DisplayInterface())
 	case 3:
 		fmt.Printf("Your choose %d to show a todo\n", choice)
