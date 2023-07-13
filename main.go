@@ -1,15 +1,16 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
-	"bufio"
-	v "github.com/anxmukul/todo-golang/view"
+
 	m "github.com/anxmukul/todo-golang/model"
+	v "github.com/anxmukul/todo-golang/view"
 )
 
 type todoInterface interface {
-	insertTodo() 
+	insertTodo()
 	showAllTodo()
 	showTodo()
 	deleteTodo()
@@ -26,8 +27,8 @@ func getUserInput() string {
 }
 
 type todo struct {
-	Id int
-	Title string
+	Id      int
+	Title   string
 	Content string
 }
 
@@ -35,10 +36,9 @@ func (t todo) insertTodo() {
 	t.Id = 0
 	t.Title = getUserInput()
 	t.Content = getUserInput()
-	var f m.Todo{t}
-	f.CreateTodo(t)
+	r := m.Todo{}
+	r.CreateTodo(t)
 }
-
 
 func handleRequest(choice int) {
 	switch choice {
