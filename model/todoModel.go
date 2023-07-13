@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-type todo struct {
+type Todo struct {
 	Id int
 	Title string
 	Content string
@@ -14,19 +14,18 @@ type todo struct {
 // 	Title string
 // 	Content string
 // }
-func (t todo) createTodo(){
-	
-	fmt.Println("This is model")
+func (t Todo) CreateTodo(){
+	fmt.Println("INside model createTod()");
 }
 
-func (t todo) deleteTodo(){
+func (t Todo) DleteTodo(){
 	// This will delete todo
 }
 
-func(t todo) updateTood(){
+func(t Todo) UpdateTood(){
 	// This will update todo
 }
 
-func (t todo) getAllTodo(){
+func (t Todo) getAllTodo(){
 	// this will get all todo
 }
