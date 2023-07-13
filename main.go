@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 
-	d "github.com/anxmukul/todo-golang/database"
 	m "github.com/anxmukul/todo-golang/model"
 	v "github.com/anxmukul/todo-golang/view"
 )
@@ -34,12 +33,12 @@ type todo struct {
 	Content string
 }
 
-func (t todo) insertTodo() {
+func (t todo) createTodo() {
 	t.Id = 0
 	t.Title = getUserInput("title")
 	t.Content = getUserInput("content")
 	r := m.Todo{Id: t.Id, Title: t.Title, Content: t.Content}
-	r.CreateTodo()
+	r.InsertTodo()
 }
 
 func handleRequest(choice int) {
@@ -47,7 +46,7 @@ func handleRequest(choice int) {
 	case 1:
 		fmt.Printf("Your choose %d to create a todo\n", choice)
 		t := todo{}
-		t.insertTodo()
+		t.createTodo()
 		handleRequest(v.DisplayInterface())
 	case 2:
 		fmt.Printf("Your choose %d to show all todo\n", choice)
@@ -73,10 +72,10 @@ func handleRequest(choice int) {
 
 func main() {
 	fmt.Println("This is a Todo Application!")
-	fmt.Println("connecting to Db...")
-	var database d.Db
-	db := database.ConnectToDb()
-	fmt.Println(db)
+	// fmt.Println("connecting to Db...")
+	// var database d.Db
+	// db := database.ConnectToDb()
+	// fmt.Println(db)
 	res := v.DisplayInterface()
 	handleRequest(res)
 }

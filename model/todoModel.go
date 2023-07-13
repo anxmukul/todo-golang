@@ -17,7 +17,7 @@ type Todo struct {
 // 	Content string
 // }
 
-func (t Todo) CreateTodo() {
+func (t Todo) InsertTodo(){
 	fmt.Println("Inside model createTodo()")
 	fmt.Printf("{Title: %s\tContent: %s}\n", t.Title, t.Content)
 	var d db.Db
