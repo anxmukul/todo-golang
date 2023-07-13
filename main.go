@@ -51,13 +51,13 @@ func (t Todo) showAllTodo() []Todo {
 	return todoArray
 }
 
-func showall(t []Todo) {
+func showall(t []Todo){
 	var todoArray = make([]v.Todo, 0)
 	for _, item := range t {
-		newTodo := v.Todo{Id: item.Id, Title: item.Title, Content: item.Content}
-		todoArray = append(todoArray, newTodo)
+ 		newTodo := v.Todo{Id: item.Id, Title: item.Title, Content: item.Content}
+ 		todoArray = append(todoArray, newTodo)
 		newTodo.ShowTodo()
-	}
+ 	}
 }
 
 // func convertIntoViewTodoArray(t []Todo) *[]v.Todo {
@@ -114,7 +114,7 @@ func handleRequest(choice int) {
 
 func main() {
 	fmt.Println("This is a Todo Application!")
-	// fmt.Println("connecting to Db...")
+	fmt.Println("connecting to Db...")
 	// var database d.Db
 	// db := database.ConnectToDb()
 	// fmt.Println(db)
