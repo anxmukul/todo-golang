@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	d "github.com/anxmukul/todo-golang/database"
 	m "github.com/anxmukul/todo-golang/model"
 	v "github.com/anxmukul/todo-golang/view"
 )
@@ -72,6 +73,10 @@ func handleRequest(choice int) {
 
 func main() {
 	fmt.Println("This is a Todo Application!")
+	fmt.Println("connecting to Db...")
+	var database d.Db
+	db := database.ConnectToDb()
+	fmt.Println(db)
 	res := v.DisplayInterface()
 	handleRequest(res)
 }
