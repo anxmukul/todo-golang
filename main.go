@@ -16,7 +16,8 @@ type todoInterface interface {
 	deleteTodo()
 }
 
-func getUserInput() string {
+func getUserInput(todoField string) string {
+	fmt.Printf("Enter %s of Todo\n", todoField)
 	titleScanner := bufio.NewScanner(os.Stdin)
 	titleScanner.Scan()
 	err := titleScanner.Err()
@@ -34,10 +35,10 @@ type todo struct {
 
 func (t todo) insertTodo() {
 	t.Id = 0
-	t.Title = getUserInput()
-	t.Content = getUserInput()
-	r := m.Todo{}
-	r.CreateTodo(t)
+	t.Title = getUserInput("title")
+	t.Content = getUserInput("content")
+	r := m.Todo{Id: t.Id, Title: t.Title, Content: t.Content}
+	r.CreateTodo()
 }
 
 func handleRequest(choice int) {
@@ -46,27 +47,31 @@ func handleRequest(choice int) {
 		fmt.Printf("Your choose %d to create a todo\n", choice)
 		t := todo{}
 		t.insertTodo()
-		v.DisplayInterface()
+		handleRequest(v.DisplayInterface())
 	case 2:
 		fmt.Printf("Your choose %d to show all todo\n", choice)
-		v.DisplayInterface()
+		r := m.Todo{}
+		r.GetAllTodo()
+		handleRequest(v.DisplayInterface())
 	case 3:
 		fmt.Printf("Your choose %d to show a todo\n", choice)
-		v.DisplayInterface()
+		handleRequest(v.DisplayInterface())
 	case 4:
 		fmt.Printf("Your choose %d to delete a todo\n", choice)
-		v.DisplayInterface()
+		r := m.Todo{}
+		r.DeleteTodo()
+		handleRequest(v.DisplayInterface())
 	case 5:
 		fmt.Printf("You choose %d to exit.\nExiting.......\n", choice)
 		os.Exit(0)
 	default:
 		fmt.Println("Invalid Choice.. choose again")
-		v.DisplayInterface()
+		handleRequest(v.DisplayInterface())
 	}
 }
 
 func main() {
 	fmt.Println("This is a Todo Application!")
 	res := v.DisplayInterface()
-	fmt.Println(res)
+	handleRequest(res)
 }
