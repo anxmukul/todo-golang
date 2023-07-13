@@ -31,9 +31,18 @@ func (t Todo) InsertTodo() {
 	fmt.Println("Createdted to with id:", id)
 }
 
-func (t Todo) DeleteTodo() {
+func (t Todo) DeleteTodo() int {
 	// This will delete todo
 	fmt.Println("Inside model DeleteTodo()")
+	var id int
+	var d db.Db
+	db := d.ConnectToDb()
+	deleteQuery := `delete from mytodo where title = $1 returning id`
+	err := db.QueryRow(deleteQuery, t.Title).Scan(&id)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return id
 
 }
 
@@ -53,8 +62,25 @@ func (t Todo) GetTodo() Todo {
 
 }
 
-func (t Todo) GetAllTodo() {
+func (t Todo) GetAllTodo() []Todo {
 	// this will get all todo
 	fmt.Println("Inside model GetAllTodo()")
-
+	selectQuery := `select * from mytodo;`
+	var d db.Db
+	db := d.ConnectToDb()
+	rows, err := db.Query(selectQuery)
+	defer rows.Close()
+	if err != nil {
+		fmt.Println(err)
+	}
+	var todoArray = make([]Todo, 0)
+	for rows.Next() {
+		var newTodo Todo
+		err := rows.Scan(&newTodo.Id, &newTodo.Title, &newTodo.Content)
+		if err != nil {
+			fmt.Println(err)
+		}
+		todoArray = append(todoArray, newTodo)
+	}
+	return todoArray
 }

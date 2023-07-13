@@ -19,6 +19,10 @@ type Todo struct {
 	Content string `json:"content"`
 }
 
+// func (t *Todo) ShowAllTodo() {
+
+// }
+
 func (t Todo) ShowTodo() {
 	fmt.Println("Todo:")
 	// fmt.Println(t)
